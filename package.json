@@ -1,0 +1,31 @@
+{
+  "name": "jsinlinecalculator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hemashushu/jsinlinecalculator.git"
+  },
+  "keywords": [
+    "formula",
+    "mathematical",
+    "math"
+  ],
+  "author": "Hippo Spark <hippospark@gmail.com> (https://twitter.com/hemashushu)",
+  "license": "SEE LICENSE IN <LICENSE.md>",
+  "bugs": {
+    "url": "https://github.com/hemashushu/jsinlinecalculator/issues"
+  },
+  "homepage": "https://github.com/hemashushu/jsinlinecalculator#readme",
+  "devDependencies": {
+    "mocha": "^8.3.2"
+  },
+  "dependencies": {
+    "fparser": "^2.0.1",
+    "jsexception": "github:hemashushu/jsexception"
+  }
+}
