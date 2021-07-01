@@ -78,6 +78,4 @@ class InlineCalculator {
     }
 }
 
-InlineCalculator.evaluate('E');
-
 module.exports = InlineCalculator;
