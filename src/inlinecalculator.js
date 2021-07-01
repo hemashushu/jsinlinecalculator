@@ -6,10 +6,11 @@ const { IllegalArgumentException } = require('jsexception');
 
 // https://zaa.ch/jison/docs/
 
-const bnfFilePath= path.join(__dirname, 'calculator.jison');
+const bnfFilePath = path.join(__dirname, 'calculator.jison');
 const bnf = fs.readFileSync(bnfFilePath, 'utf-8');
 const parser = new jison.Parser(bnf);
 
+// 计算阶乘
 const factorial = (n) => {
     let r = 1;
     for (let i = 1; i <= n; i++) {
@@ -20,6 +21,10 @@ const factorial = (n) => {
 
 parser.yy.functions = {
     factorial: factorial,
+
+    // 大部分函数直接使用 JavaScript 的内置 Math 对象提供的功能，
+    // Math 对象支持的函数见这里：
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math
 
     log10: Math.log10,
     log2: Math.log2,
@@ -41,34 +46,17 @@ parser.yy.functions = {
  * 简单的单行算式求值模块
  *
  * 支持的功能：
- * - 多个数（正负整数或小数，即 + - .）的加减乘除运算及指数运算（幂运算）
- *   （即 + - * / % ^），阶乘（!）
- * - 圆周率常数 π 和欧拉常数（自然常数）e，即 PI 和 E
- * - 括号改变运算优先级，即 "(" 和 ")"
- * - 对数运算（即 log10, log2, ln, log(m,n) ）
- * - 常用函数，比如 绝对值、开方、四舍五入、取整，即 abs，sqrt，round，trunc
- * - 三角函数， sin, cos, tan 以及 asin, acos, atan
- * - 变量，以字母开头的字符串，即 [a-zA-Z][a-zA-Z0-9_]*
  *
- * 示例：
- * - 1 + 2 * 3 // =7
- * - (1+2)*(3+4) // = 21
- * - 2^10 + 2^4 // = 1024 + 16 // ^ 指数运算符号
- * - 3! = 1 * 2 * 3 = 6   !阶乘
- * - sqrt(4) + sqrt(9) // = 2 + 3 // sqrt 是开方函数
- * - abs(-123) + abs(456) // = 123 + 456 // abs 是求绝对值函数
- * - round(3.14) + round(2.718) // = 3 + 3 // round 是求四舍五入函数
- * - trunc(3.14) + trunc(2.718) // = 3 + 2 // trunc 直接丢弃小数部分
- * - 2 * PI * 3 // PI 是圆周率常数
- * - log10(100) + log2(1024) + log(E) // = 2 + 10 + 1 // log10, log2, log 分别是
- *   以 10, 2 和 e 为底的对数运算，其中 log(x) 表示 ln(x)，但这里不支持 ln 这种写法。
- * - sin(PI/2) + cos(0) // = 1 + 1 // sin 和 cos 分别是求正弦，余弦函数。单位：弧度
- * - tan(PI/4) // = 1 // 正切，可使用 1/tan(x) 求得余切，这里不支持 cot(x) 这种写法。
- * - asin(1) + acos(1) + atan(1) // = PI/2 + 0 + PI/4 // asin, acos, atan 分别是
- *   反正弦、反余弦、反正切函数
+ * - 正负整数或小数，如： 3, -6, 3.14, -0.618；
+ * - 加减乘除余运算（即 + - * / %）；
+ * - 指数运算（幂运算），如： 3^2 = 9, 2^10 = 1024；
+ * - 阶乘，如 3! = 6, 4! = 24；
+ * - 括号改变运算优先级，如： (1+2) * 3 = 9；
+ * - 对数运算，如：log10(100) = 2, log2(1024) = 10, ln(E) = 1, log(10,100) = 2，其中 log(base, n) 表示以 base 为底的 n 的对数；
+ * - 常用函数：绝对值 `abs`、开方 `sqrt`、四舍五入 `round`、取整 `trunc`，如：abs(-12) = 12, sqrt(4) = 2, round(3.14) = 3, round(2.718) = 3, trunc(3.14) = 3, trunc(2.718) = 2；
+ * - 圆周率常数 π（即 PI ）和欧拉常数/自然常数 e（即 E），如 2 * PI = 6.28；
+ * - 三角函数正弦 `sin`, 余弦 `cos`, 正切 `tan` 以及反正弦 `asin`, 反余弦 `acos`, 反正切 `atan`， 它们的参数的单位是 "弧度"。如：sin(PI/2) = 1, cos(0) = 1, tan(PI/4) = 1, asin(1) = PI/2, acos(1) = 0, atan(1) = PI/4。
  *
- * JavaScript 的 Math 对象支持的函数见这里：
- * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math
  */
 class InlineCalculator {
 
