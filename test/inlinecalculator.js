@@ -43,6 +43,23 @@ describe('InlineCalculator Test', () => {
         assert(3 - r12 < 0.01);
     });
 
+    it('Test bitwise operators', ()=>{
+        let r1 = InlineCalculator.evaluate('3 | 5'); //'0b0011 | 0b0101'
+        assert.equal(r1, 0b0011 | 0b0101);
+
+        let r2 = InlineCalculator.evaluate('3 & 5'); //'0b0011 & 0b0101'
+        assert.equal(r2, 0b0011 & 0b0101);
+
+        let r3 = InlineCalculator.evaluate('~3'); //'~0b0011'
+        assert.equal(r3, ~0b0011);
+
+        let r4 = InlineCalculator.evaluate('3 << 2'); //'0b0011 << 2'
+        assert.equal(r4, 0b0011 << 2);
+
+        let r5 = InlineCalculator.evaluate('5 >> 2'); //'0b0101 >> 2'
+        assert.equal(r5, 0b0101 >> 2);
+    });
+
     it('Test circular functions', () => {
         let r1 = InlineCalculator.evaluate('2 * PI * 3');
         assert((2 * Math.PI * 3) - r1 < 0.01);
