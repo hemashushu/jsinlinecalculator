@@ -74,6 +74,17 @@ describe('InlineCalculator Test', () => {
         assert((Math.PI / 2 + 0 + Math.PI / 4) - r4 < 0.01);
     });
 
+    it('Test binary and hex', ()=>{
+        let r1 = InlineCalculator.evaluate('0b1000');
+        assert.equal(r1, 8);
+
+        let r2 = InlineCalculator.evaluate('0xa');
+        assert.equal(r2, 10);
+
+        let r3 = InlineCalculator.evaluate('0b1000 + 0xa');
+        assert.equal(r3, 18);
+    });
+
     it('Test invalid express', () => {
         try {
             InlineCalculator.evaluate('foo bar');
