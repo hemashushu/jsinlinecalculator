@@ -5,7 +5,7 @@
 %lex
 %%
 
-\s+                   /* skip whitespace */
+\s+                     /* skip whitespace */
 [0-9_]+("."[0-9_]+)?\b  return 'NUMBER'
 0b[01_]+                return 'NUMBER'
 0x[0-9a-f_]+            return 'NUMBER'
